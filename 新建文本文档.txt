@@ -1,0 +1,35 @@
+#define swap(a,b){\
+    __typeof(a) __temp = a;\
+    a = b;b = __temp;\
+    }
+
+char * reverseWords(char * s){
+    int i = 0,j = 0;
+    while(s[j] == ' ')++j;// 处理前导的空格
+    // 去掉所有的连续的空格
+    if(s[j] == 0)return "";
+    while(s[j]){
+        while(s[j] == ' '&&s[j] == s[j+1])++j;
+        s[i++] = s[j++];
+    }
+    if(s[i-1] == ' ')--i;
+    int len = i--;
+    j = s[len] = 0;
+    // 翻转一下。
+    while(j < i){
+        swap(s[i],s[j]);
+        --i,++j;
+    }
+    // 翻转每个单词
+    i = j = 0;
+    while(j <= len){
+        while(s[j] != ' '&&j < len)++j;
+        int tmp = j-1;
+        while(i < tmp){
+            swap(s[i],s[tmp]);
+            ++i;--tmp;
+        }
+        i = ++j;
+    }
+    return s;
+}
